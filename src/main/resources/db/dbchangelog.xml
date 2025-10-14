@@ -6,12 +6,12 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <include file="scripts/001_ddl_create_auto_user.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/006_ddl_add_table_engine.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/007_ddl_add_table_car.sql" relativeToChangelogFile="true"/>
     <include file="scripts/002_ddl_create_auto_post.sql" relativeToChangelogFile="true"/>
     <include file="scripts/003_ddl_update_auto_user.sql" relativeToChangelogFile="true"/>
     <include file="scripts/004_ddl_add_table_price_history.sql" relativeToChangelogFile="true"/>
     <include file="scripts/005_ddl_add_table_participates.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/006_ddl_add_table_engine.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/007_ddl_add_table_car.sql" relativeToChangelogFile="true"/>
     <include file="scripts/008_ddl_add_table_owners.sql" relativeToChangelogFile="true"/>
     <include file="scripts/009_ddl_add_table_history_owner.sql" relativeToChangelogFile="true"/>
     <include file="scripts/010_ddl_add_table_history.sql" relativeToChangelogFile="true"/>
