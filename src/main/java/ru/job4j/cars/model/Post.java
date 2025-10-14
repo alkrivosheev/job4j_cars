@@ -25,6 +25,10 @@ public class Post {
     @JoinColumn(name = "auto_user_id", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "fk_auto_post_car"))
+    private Car car;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "post")
     private List<PriceHistory> priceHistories;
 
