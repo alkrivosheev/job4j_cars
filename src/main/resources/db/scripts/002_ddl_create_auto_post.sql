@@ -5,6 +5,7 @@ CREATE TABLE auto_post (
                            auto_user_id BIGINT NOT NULL,
                            CONSTRAINT fk_auto_post_user FOREIGN KEY (auto_user_id)
                                REFERENCES auto_user(id) ON DELETE CASCADE,
+                           car_id BIGINT NOT NULL,
                            CONSTRAINT fk_auto_post_car FOREIGN KEY (car_id)
                                REFERENCES car(id) ON DELETE SET NULL
 );
