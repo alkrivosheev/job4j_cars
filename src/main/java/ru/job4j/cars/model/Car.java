@@ -13,7 +13,7 @@ public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(columnDefinition = "TEXT")
     private String name;
@@ -24,8 +24,8 @@ public class Car {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "history_owner", joinColumns = {
-            @JoinColumn(name = "car_id", nullable = false, updatable = false)},
+            @JoinColumn(name = "car_id")},
             inverseJoinColumns = {
-                    @JoinColumn(name = "owner_id", nullable = false, updatable = false)})
+                    @JoinColumn(name = "owner_id")})
     private Set<Owner> owners = new HashSet<>();
 }

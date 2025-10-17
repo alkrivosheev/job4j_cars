@@ -1,4 +1,5 @@
-create table car(
-                    id SERIAL PRIMARY KEY,
-                    engine_id INT NOT NULL UNIQUE REFERENCES engine(id)
+CREATE TABLE car(
+                    id BIGSERIAL PRIMARY KEY,
+                    name TEXT,
+                    engine_id BIGINT NOT NULL UNIQUE REFERENCES engine(id)
 );

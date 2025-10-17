@@ -13,11 +13,12 @@ import java.util.List;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
 

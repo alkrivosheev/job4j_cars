@@ -1,5 +1,5 @@
-create table history_owner(
-                              id SERIAL PRIMARY KEY,
-                              owner_id INT NOT NULL REFERENCES owners(id),
-                              car_id INT NOT NULL REFERENCES car(id)
+CREATE TABLE history_owner(
+                              id BIGSERIAL PRIMARY KEY,
+                              car_id BIGINT NOT NULL REFERENCES car(id),
+                              owner_id BIGINT NOT NULL REFERENCES owners(id)
 );

@@ -54,7 +54,7 @@ public class CarRepository {
      */
     public Optional<Car> findById(int carId) {
         return crudRepository.optional(
-                "FROM Car WHERE id = :fId", Car.class,
+                "SELECT DISTINCT c FROM Car c LEFT JOIN FETCH c.owners WHERE c.id = :fId", Car.class,
                 Map.of("fId", carId)
         );
     }

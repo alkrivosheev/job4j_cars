@@ -1,5 +1,5 @@
 CREATE TABLE PRICE_HISTORY(
-                              id SERIAL PRIMARY KEY,
+                              id BIGSERIAL PRIMARY KEY,
                               before BIGINT NOT NULL,
                               after BIGINT NULL,
                               created TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
