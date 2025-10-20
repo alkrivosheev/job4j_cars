@@ -17,7 +17,15 @@ public class PostRepository {
      */
     public List<Post> findPostsForLastDay() {
         LocalDateTime oneDayAgo = LocalDateTime.now().minusDays(1);
-        String query = "SELECT DISTINCT p FROM Post p WHERE p.created > :oneDayAgo ORDER BY p.created DESC";
+        String query = """
+        SELECT DISTINCT p FROM Post p 
+        LEFT JOIN FETCH p.photos 
+        LEFT JOIN FETCH p.car c 
+        LEFT JOIN FETCH c.engine 
+        LEFT JOIN FETCH p.user 
+        WHERE p.created > :oneDayAgo 
+        ORDER BY p.created DESC
+        """;
         return crudRepository.query(query, Post.class, Map.of("oneDayAgo", oneDayAgo));
     }
 
@@ -27,10 +35,14 @@ public class PostRepository {
      */
     public List<Post> findPostsWithPhoto() {
         String query = """
-            SELECT DISTINCT p FROM Post p
-            JOIN p.photos ph
-            ORDER BY p.created DESC
-            """;
+        SELECT DISTINCT p FROM Post p 
+        LEFT JOIN FETCH p.photos 
+        LEFT JOIN FETCH p.car c 
+        LEFT JOIN FETCH c.engine 
+        LEFT JOIN FETCH p.user 
+        WHERE SIZE(p.photos) > 0 
+        ORDER BY p.created DESC
+        """;
         return crudRepository.query(query, Post.class);
     }
 
@@ -41,11 +53,14 @@ public class PostRepository {
      */
     public List<Post> findPostsByBrand(String brand) {
         String query = """
-            SELECT DISTINCT p FROM Post p
-            JOIN p.car c
-            WHERE c.name LIKE :brand
-            ORDER BY p.created DESC
-            """;
+        SELECT DISTINCT p FROM Post p 
+        LEFT JOIN FETCH p.photos 
+        LEFT JOIN FETCH p.car c 
+        LEFT JOIN FETCH c.engine 
+        LEFT JOIN FETCH p.user 
+        WHERE c.name LIKE :brand 
+        ORDER BY p.created DESC
+        """;
         return crudRepository.query(query, Post.class, Map.of("brand", "%" + brand + "%"));
     }
 }

@@ -45,7 +45,7 @@ public class OwnerRepository {
      * @return список владельцев.
      */
     public List<Owner> findAllOrderById() {
-        return crudRepository.query("FROM Owner ORDER BY id ASC", Owner.class);
+        return crudRepository.query("SELECT DISTINCT o FROM Owner o LEFT JOIN FETCH o.user ORDER BY o.id ASC", Owner.class);
     }
 
     /**
@@ -54,7 +54,7 @@ public class OwnerRepository {
      */
     public Optional<Owner> findById(int ownerId) {
         return crudRepository.optional(
-                "FROM Owner WHERE id = :fId", Owner.class,
+                "SELECT DISTINCT o FROM Owner o LEFT JOIN FETCH o.user WHERE o.id = :fId", Owner.class,
                 Map.of("fId", ownerId)
         );
     }

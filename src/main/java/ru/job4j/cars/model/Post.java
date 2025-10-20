@@ -40,4 +40,9 @@ public class Post {
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
     private List<User> participates = new ArrayList<>();
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "post_photos", joinColumns = @JoinColumn(name = "post_id"))
+    @Column(name = "photo_path")
+    private List<String> photos = new ArrayList<>();
 }
