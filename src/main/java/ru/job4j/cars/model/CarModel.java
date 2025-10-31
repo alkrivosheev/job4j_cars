@@ -5,18 +5,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "owners")
-public class Owner {
+@Table(name = "models")
+public class CarModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false, length = 255)
     private String name;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
 }

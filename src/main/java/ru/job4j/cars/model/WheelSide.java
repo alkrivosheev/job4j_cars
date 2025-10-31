@@ -3,10 +3,14 @@ package ru.job4j.cars.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/**
+ * Модель данных для таблицы wheel_sides.
+ * Справочник типов расположения руля.
+ */
 @Data
 @Entity
-@Table(name = "engines")
-public class Engine {
+@Table(name = "wheel_sides")
+public class WheelSide {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,45 +4,38 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "auto_post")
+@Table(name = "posts")
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 6, nullable = false)
+    private String status;
+
+    @Column(length = 255)
     private String description;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created", nullable = false)
-    private LocalDateTime created;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "auto_user_id", nullable = false)
-    private User user;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private java.math.BigDecimal price;
 
-    @ManyToOne
-    @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "fk_auto_post_car"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id", nullable = false, foreignKey = @ForeignKey(name = "FK_POST_CAR_ID"))
     private Car car;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "post")
-    private List<PriceHistory> priceHistories;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "FK_POST_USER_ID"))
+    private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "participates",
-            joinColumns = { @JoinColumn(name = "post_id") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id") }
-    )
-    private List<User> participates = new ArrayList<>();
-
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "post_photos", joinColumns = @JoinColumn(name = "post_id"))
-    @Column(name = "photo_path")
-    private List<String> photos = new ArrayList<>();
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<PostPhoto> postPhotos = new HashSet<>();
 }

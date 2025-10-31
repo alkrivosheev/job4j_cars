@@ -9,12 +9,14 @@ import java.util.Optional;
 
 @AllArgsConstructor
 public class EngineRepository {
+
     private final CrudRepository crudRepository;
 
     /**
      * Сохранить в базе.
-     * @param engine двигатель.
-     * @return двигатель с id.
+     *
+     * @param engine двигатель автомобиля.
+     * @return двигатель автомобиля с id.
      */
     public Engine create(Engine engine) {
         crudRepository.run(session -> session.persist(engine));
@@ -22,15 +24,17 @@ public class EngineRepository {
     }
 
     /**
-     * Обновить в базе двигатель.
-     * @param engine двигатель.
+     * Обновить в базе двигатель автомобиля.
+     *
+     * @param engine двигатель автомобиля.
      */
     public void update(Engine engine) {
         crudRepository.run(session -> session.merge(engine));
     }
 
     /**
-     * Удалить двигатель по id.
+     * Удалить двигатель автомобиля по id.
+     *
      * @param engineId ID
      */
     public void delete(int engineId) {
@@ -41,7 +45,8 @@ public class EngineRepository {
     }
 
     /**
-     * Список двигателей, отсортированных по id.
+     * Список всех двигателей автомобилей, отсортированных по id.
+     *
      * @return список двигателей.
      */
     public List<Engine> findAllOrderById() {
@@ -49,12 +54,15 @@ public class EngineRepository {
     }
 
     /**
-     * Найти двигатель по ID
-     * @return двигатель.
+     * Найти двигатель автомобиля по ID
+     *
+     * @param engineId ID двигателя
+     * @return двигатель автомобиля.
      */
     public Optional<Engine> findById(int engineId) {
         return crudRepository.optional(
-                "FROM Engine WHERE id = :fId", Engine.class,
+                "SELECT e FROM Engine e WHERE e.id = :fId",
+                Engine.class,
                 Map.of("fId", engineId)
         );
     }

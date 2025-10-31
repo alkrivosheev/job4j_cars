@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS cars (
                     drive_type_id BIGINT NOT NULL,
                     wheel_side_id BIGINT NOT NULL,
                     car_color_id BIGINT NOT NULL,
+                    fuel_type_id BIGINT NOT NULL,
+                    CONSTRAINT fk_fuel_type_id FOREIGN KEY (fuel_type_id)
+                        REFERENCES fuel_types(id) ON DELETE RESTRICT,
                     CONSTRAINT fk_car_color_id FOREIGN KEY (car_color_id)
                         REFERENCES car_colors(id) ON DELETE RESTRICT,
                     CONSTRAINT fk_wheel_side_id FOREIGN KEY (wheel_side_id)

@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "engines")
-public class Engine {
+@Table(name = "bodies")
+public class Body {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

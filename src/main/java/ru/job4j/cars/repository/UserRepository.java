@@ -9,10 +9,12 @@ import java.util.Optional;
 
 @AllArgsConstructor
 public class UserRepository {
+
     private final CrudRepository crudRepository;
 
     /**
      * Сохранить в базе.
+     *
      * @param user пользователь.
      * @return пользователь с id.
      */
@@ -23,6 +25,7 @@ public class UserRepository {
 
     /**
      * Обновить в базе пользователя.
+     *
      * @param user пользователь.
      */
     public void update(User user) {
@@ -31,6 +34,7 @@ public class UserRepository {
 
     /**
      * Удалить пользователя по id.
+     *
      * @param userId ID
      */
     public void delete(int userId) {
@@ -41,7 +45,8 @@ public class UserRepository {
     }
 
     /**
-     * Список пользователь отсортированных по id.
+     * Список пользователей, отсортированных по id.
+     *
      * @return список пользователей.
      */
     public List<User> findAllOrderById() {
@@ -50,36 +55,29 @@ public class UserRepository {
 
     /**
      * Найти пользователя по ID
+     *
+     * @param userId ID пользователя
      * @return пользователь.
      */
     public Optional<User> findById(int userId) {
         return crudRepository.optional(
-                "FROM User WHERE id = :fId", User.class,
+                "SELECT u FROM User u WHERE u.id = :fId",
+                User.class,
                 Map.of("fId", userId)
         );
     }
 
     /**
-     * Список пользователей по login LIKE %key%
-     * @param key key
-     * @return список пользователей.
-     */
-    public List<User> findByLikeLogin(String key) {
-        return crudRepository.query(
-                "FROM User WHERE login LIKE :fKey", User.class,
-                Map.of("fKey", "%" + key + "%")
-        );
-    }
-
-    /**
-     * Найти пользователя по login.
-     * @param login login.
-     * @return Optional or user.
+     * Найти пользователя по логину.
+     *
+     * @param login логин пользователя
+     * @return пользователь.
      */
     public Optional<User> findByLogin(String login) {
         return crudRepository.optional(
-                "FROM User WHERE login = :fLogin", User.class,
-                Map.of("fLogin", login)
+                "SELECT u FROM User u WHERE u.login = :login",
+                User.class,
+                Map.of("login", login)
         );
     }
 }
