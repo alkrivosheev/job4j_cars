@@ -61,7 +61,7 @@ public class TransmissionTypeRepository {
      */
     public Optional<TransmissionType> findById(int transmissionTypeId) {
         return crudRepository.optional(
-                "SELECT tt FROM TransmissionType tt WHERE tt.id = :fId",
+                "FROM TransmissionType WHERE id = :fId",
                 TransmissionType.class,
                 Map.of("fId", transmissionTypeId)
         );

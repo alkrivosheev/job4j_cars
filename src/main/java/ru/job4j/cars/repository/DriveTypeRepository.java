@@ -61,7 +61,7 @@ public class DriveTypeRepository {
      */
     public Optional<DriveType> findById(int driveTypeId) {
         return crudRepository.optional(
-                "SELECT dt FROM DriveType dt WHERE dt.id = :fId",
+                "FROM DriveType WHERE id = :fId",
                 DriveType.class,
                 Map.of("fId", driveTypeId)
         );

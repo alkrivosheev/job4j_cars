@@ -60,7 +60,7 @@ public class PostRepository {
      */
     public List<Post> findActivePostsOrderByCreatedAtDesc() {
         return crudRepository.query(
-                "SELECT DISTINCT p FROM Post p LEFT JOIN FETCH p.car c LEFT JOIN FETCH c.model m LEFT JOIN FETCH m.brand WHERE p.status = 'active' ORDER BY p.createdAt DESC",
+                "SELECT DISTINCT p FROM Post p LEFT JOIN FETCH p.car c LEFT JOIN FETCH c.model LEFT JOIN FETCH c.brand WHERE p.status = 'active' ORDER BY p.createdAt DESC",
                 Post.class
         );
     }
@@ -77,8 +77,8 @@ public class PostRepository {
                         SELECT DISTINCT p FROM Post p
                         LEFT JOIN FETCH p.car c
                         LEFT JOIN FETCH p.user
-                        LEFT JOIN FETCH c.model m
-                        LEFT JOIN FETCH m.brand
+                        LEFT JOIN FETCH c.model
+                        LEFT JOIN FETCH c.brand
                         LEFT JOIN FETCH c.brand
                         LEFT JOIN FETCH c.category
                         LEFT JOIN FETCH c.body
@@ -107,8 +107,8 @@ public class PostRepository {
                 """
                         SELECT DISTINCT p FROM Post p
                         LEFT JOIN FETCH p.car c
-                        LEFT JOIN FETCH c.model m
-                        LEFT JOIN FETCH m.brand
+                        LEFT JOIN FETCH c.model
+                        LEFT JOIN FETCH c.brand
                         WHERE p.user.id = :userId
                         ORDER BY p.id ASC
                         """,

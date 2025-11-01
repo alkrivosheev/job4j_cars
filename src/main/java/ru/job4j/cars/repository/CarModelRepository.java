@@ -35,12 +35,12 @@ public class CarModelRepository {
     /**
      * Удалить модель автомобиля по id.
      *
-     * @param carSpecId ID
+     * @param carModelId ID
      */
-    public void delete(int carSpecId) {
+    public void delete(int carModelId) {
         crudRepository.run(
-                "DELETE FROM CarSpecification WHERE id = :fId",
-                Map.of("fId", carSpecId)
+                "DELETE FROM CarModel WHERE id = :fId",
+                Map.of("fId", carModelId)
         );
     }
 
@@ -56,28 +56,14 @@ public class CarModelRepository {
     /**
      * Найти модель автомобиля по ID
      *
-     * @param carSpecId ID модели
+     * @param carModelId ID модели
      * @return модель автомобиля.
      */
-    public Optional<CarModel> findById(int carSpecId) {
+    public Optional<CarModel> findById(int carModelId) {
         return crudRepository.optional(
-                "SELECT cs FROM CarModel cs LEFT JOIN FETCH cs.brand WHERE cs.id = :fId",
+                "FROM CarModel WHERE id = :fId",
                 CarModel.class,
-                Map.of("fId", carSpecId)
-        );
-    }
-
-    /**
-     * Найти модели автомобилей по ID марки.
-     *
-     * @param brandId ID марки.
-     * @return список моделей для марки.
-     */
-    public List<CarModel> findByBrandId(int brandId) {
-        return crudRepository.query(
-                "SELECT cs FROM CarModel cs WHERE cs.brand.id = :brandId ORDER BY cs.id ASC",
-                CarModel.class,
-                Map.of("brandId", brandId)
+                Map.of("fId", carModelId)
         );
     }
 }

@@ -61,7 +61,7 @@ public class CategoryRepository {
      */
     public Optional<Category> findById(int categoryId) {
         return crudRepository.optional(
-                "SELECT c FROM Category c WHERE c.id = :fId",
+                "FROM Category WHERE id = :fId",
                 Category.class,
                 Map.of("fId", categoryId)
         );

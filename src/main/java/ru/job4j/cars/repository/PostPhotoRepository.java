@@ -61,7 +61,7 @@ public class PostPhotoRepository {
      */
     public Optional<PostPhoto> findById(int photoId) {
         return crudRepository.optional(
-                "SELECT p FROM PostPhoto p WHERE p.id = :fId",
+                "FROM PostPhoto WHERE id = :fId",
                 PostPhoto.class,
                 Map.of("fId", photoId)
         );
@@ -75,7 +75,7 @@ public class PostPhotoRepository {
      */
     public List<PostPhoto> findByPostId(int postId) {
         return crudRepository.query(
-                "SELECT p FROM PostPhoto p WHERE p.post.id = :postId ORDER BY p.id ASC",
+                "FROM PostPhoto WHERE post.id = :postId ORDER BY id ASC",
                 PostPhoto.class,
                 Map.of("postId", postId)
         );

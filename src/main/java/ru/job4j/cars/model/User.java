@@ -13,6 +13,9 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 255)
+    private String name;
+
+    @Column(nullable = false, unique = true, length = 255)
     private String login;
 
     @Column(nullable = false, length = 255)

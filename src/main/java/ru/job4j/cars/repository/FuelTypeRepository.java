@@ -61,7 +61,7 @@ public class FuelTypeRepository {
      */
     public Optional<FuelType> findById(int fuelTypeId) {
         return crudRepository.optional(
-                "SELECT ft FROM FuelType ft WHERE ft.id = :fId",
+                "FROM FuelType WHERE id = :fId",
                 FuelType.class,
                 Map.of("fId", fuelTypeId)
         );

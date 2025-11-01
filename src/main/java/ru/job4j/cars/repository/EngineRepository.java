@@ -61,7 +61,7 @@ public class EngineRepository {
      */
     public Optional<Engine> findById(int engineId) {
         return crudRepository.optional(
-                "SELECT e FROM Engine e WHERE e.id = :fId",
+                "FROM Engine WHERE id = :fId",
                 Engine.class,
                 Map.of("fId", engineId)
         );
