@@ -32,6 +32,4 @@ public class TransmissionTypeService {
     public Optional<TransmissionType> findById(int transmissionTypeId) {
         return transmissionTypeService.findById(transmissionTypeId);
     }
-
-
 }
