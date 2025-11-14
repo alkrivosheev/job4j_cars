@@ -1,8 +1,13 @@
 package ru.job4j.cars.repository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cars.model.Post;
+import ru.job4j.cars.model.PostPhoto;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +15,11 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Repository
+@Slf4j
 public class PostRepository {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private final CrudRepository crudRepository;
 
@@ -81,7 +90,6 @@ public class PostRepository {
                         LEFT JOIN FETCH p.user
                         LEFT JOIN FETCH c.model
                         LEFT JOIN FETCH c.brand
-                        LEFT JOIN FETCH c.brand
                         LEFT JOIN FETCH c.category
                         LEFT JOIN FETCH c.body
                         LEFT JOIN FETCH c.engine
@@ -117,5 +125,29 @@ public class PostRepository {
                 Post.class,
                 Map.of("userId", userId)
         );
+    }
+
+    /**
+     * Список объявлений с загруженными фотографиями.
+     *
+     * @return список объявлений с фотографиями.
+     */
+    public List<Post> findAllWithPhotos() {
+        String jpql = "SELECT p FROM Post p LEFT JOIN FETCH p.postPhotos ORDER BY p.id ASC";
+
+        Query query = entityManager.createQuery(jpql, Post.class);
+        List<Post> results = query.getResultList();
+
+        log.info("Найдено {} объявлений с фотографиями", results.size());
+        for (int i = 0; i < results.size(); i++) {
+            Post post = results.get(i);
+            log.debug("Объявление {}: id={}, количество фотографий={}",
+                    i + 1, post.getId(), post.getPostPhotos().size());
+            for (PostPhoto photo : post.getPostPhotos()) {
+                 log.debug("  Фото: id={}, path={}", photo.getId(), photo.getPhotoPath());
+            }
+        }
+
+        return results;
     }
 }

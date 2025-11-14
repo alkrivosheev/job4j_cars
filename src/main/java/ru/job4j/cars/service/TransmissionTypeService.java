@@ -3,6 +3,7 @@ package ru.job4j.cars.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.cars.model.TransmissionType;
+import ru.job4j.cars.repository.TransmissionTypeRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,25 +12,25 @@ import java.util.Optional;
 @Service
 public class TransmissionTypeService {
 
-    private final TransmissionTypeService transmissionTypeService;
+    private final TransmissionTypeRepository transmissionTypeRepository;
 
     public TransmissionType create(TransmissionType transmissionType) {
-        return transmissionTypeService.create(transmissionType);
+        return transmissionTypeRepository.create(transmissionType);
     }
 
     public void update(TransmissionType transmissionType) {
-        transmissionTypeService.update(transmissionType);
+        transmissionTypeRepository.update(transmissionType);
     }
 
     public void delete(int transmissionTypeId) {
-        transmissionTypeService.delete(transmissionTypeId);
+        transmissionTypeRepository.delete(transmissionTypeId);
     }
 
     public List<TransmissionType> findAllOrderById() {
-        return transmissionTypeService.findAllOrderById();
+        return transmissionTypeRepository.findAllOrderById();
     }
 
     public Optional<TransmissionType> findById(int transmissionTypeId) {
-        return transmissionTypeService.findById(transmissionTypeId);
+        return transmissionTypeRepository.findById(transmissionTypeId);
     }
 }

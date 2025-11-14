@@ -2,6 +2,7 @@ package ru.job4j.cars.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.cars.model.Post;
 import ru.job4j.cars.repository.PostRepository;
 
@@ -24,6 +25,11 @@ public class PostService {
 
     public void delete(int postId) {
         postRepository.delete(postId);
+    }
+
+    @Transactional
+    public List<Post> findAllPostWithPhotos() {
+        return postRepository.findAllWithPhotos();
     }
 
     public List<Post> findAllOrderById() {

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    <!-- Подключение Bootstrap или других CSS стилей (по желанию) -->
+    <style>
+        .post-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .post-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+        .post-info {
+            margin-top: 8px;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .photo-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Список объявлений</h1>
+
+    <!-- Проверяем, есть ли посты -->
+    <div th:if="${#lists.isEmpty(posts)}" class="alert alert-info">
+        Объявлений пока нет.
+    </div>
+
+    <!-- Итерируемся по списку постов -->
+    <div th:unless="${#lists.isEmpty(posts)}" class="posts-list">
+        <div th:each="post : ${posts}" class="post-card">
+            <div class="post-info">
+                <h3 th:text="${post.description}">Описание поста</h3>
+                <p><strong>Статус:</strong> <span th:text="${post.status}">Статус</span></p>
+                <p><strong>Цена:</strong> <span th:text="${#numbers.formatCurrency(post.price)}">Цена</span></p>
+                <!-- Другие поля поста, если есть... -->
+            </div>
+
+            <!-- Блок для фотографий -->
+            <div class="post-photos">
+                <h5>Фотографии:</h5>
+                <!-- Проверяем, есть ли фото у поста (изменено на post.postPhotos) -->
+                <div th:if="${#sets.isEmpty(post.postPhotos)}"> <!-- Используем #sets.isEmpty для Set -->
+                    <p>Фотографии отсутствуют</p>
+                </div>
+                <div th:unless="${#sets.isEmpty(post.postPhotos)}" class="photo-grid"> <!-- Используем #sets.isEmpty -->
+                    <!-- Итерируемся по списку post.postPhotos -->
+                    <div th:each="postPhoto : ${post.postPhotos}" class="photo-item">
+                        <!-- Получаем путь к фото из объекта PostPhoto -->
+                        <img th:src="${postPhoto.getImageUrl()}" th:alt="'Фото для поста ' + ${post.id}" class="post-image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

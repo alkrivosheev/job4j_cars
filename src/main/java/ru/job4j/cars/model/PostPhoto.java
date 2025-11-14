@@ -18,4 +18,9 @@ public class PostPhoto {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PHOTO_POST_ID"))
     private Post post;
+
+    @Transient
+    public String getImageUrl() {
+        return "/images/" + this.photoPath;
+    }
 }

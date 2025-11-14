@@ -19,4 +19,5 @@
     <include file="scripts/014_ddl_create_table_cars.sql" relativeToChangelogFile="true"/>
     <include file="scripts/002_ddl_create_table_posts.sql" relativeToChangelogFile="true"/>
     <include file="scripts/003_ddl_create_table_post_photos.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/015_dml_create_test_post.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
