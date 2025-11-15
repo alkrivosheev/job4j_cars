@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cars.model.*;
 import ru.job4j.cars.testutil.TestDatabaseConfig;
+import ru.job4j.cars.testutil.TestRepositoryUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ class PostPhotoRepositoryTest {
     private PostRepository postRepository;
     private CarRepository carRepository;
     private UserRepository userRepository;
+    private TestRepositoryUtils testRepositoryUtils;
 
     /**
      * Инициализация репозиториев перед каждым тестом.
@@ -37,6 +39,7 @@ class PostPhotoRepositoryTest {
         this.postRepository = new PostRepository(crudRepository);
         this.carRepository = new CarRepository(crudRepository);
         this.userRepository = new UserRepository(crudRepository);
+        this.testRepositoryUtils = new TestRepositoryUtils(sessionFactory, crudRepository);
     }
 
     /**
@@ -68,16 +71,16 @@ class PostPhotoRepositoryTest {
      * Создает тестовый автомобиль.
      */
     private Car createTestCar(String vin) {
-        Brand brand = createTestBrand();
-        CarModel model = createTestModel();
-        Category category = createTestCategory();
-        Body body = createTestBody();
-        Engine engine = createTestEngine();
-        TransmissionType transmissionType = createTestTransmissionType();
-        DriveType driveType = createTestDriveType();
-        CarColor carColor = createTestCarColor();
-        FuelType fuelType = createTestFuelType();
-        WheelSide wheelSide = createTestWheelSide();
+        Brand brand = testRepositoryUtils.createTestBrand("TestBrand");
+        CarModel model = testRepositoryUtils.createTestModel("TestModel");
+        Category category = testRepositoryUtils.createTestCategory("Легковой");
+        Body body = testRepositoryUtils.createTestBody("Седан");
+        Engine engine = testRepositoryUtils.createTestEngine("V6");
+        TransmissionType transmissionType = testRepositoryUtils.createTestTransmissionType("Автомат");
+        DriveType driveType = testRepositoryUtils.createTestDriveType("Передний");
+        CarColor carColor = testRepositoryUtils.createTestCarColor("Черный");
+        FuelType fuelType = testRepositoryUtils.createTestFuelType("Бензин");
+        WheelSide wheelSide = testRepositoryUtils.createTestWheelSide("Левый");
 
         if (vin.length() > 17) {
             vin = vin.substring(0, 17);

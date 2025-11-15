@@ -78,12 +78,14 @@ class WheelSideRepositoryTest {
         WheelSide wheelSide = createTestWheelSide("Правый");
         WheelSide savedWheelSide = wheelSideRepository.create(wheelSide);
 
-        savedWheelSide.setName("Левый");
+        String newName = "Левый_Обновленный_" + System.currentTimeMillis();
+        savedWheelSide.setName(newName);
+
         wheelSideRepository.update(savedWheelSide);
 
         Optional<WheelSide> updatedWheelSide = wheelSideRepository.findById(Math.toIntExact(savedWheelSide.getId()));
         assertThat(updatedWheelSide).isPresent();
-        assertThat(updatedWheelSide.get().getName()).isEqualTo("Левый");
+        assertThat(updatedWheelSide.get().getName()).isEqualTo(newName);
     }
 
     /**

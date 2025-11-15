@@ -1,13 +1,13 @@
-INSERT INTO fuel_types (name) VALUES ('Бензин') ON CONFLICT (name) DO NOTHING;
-INSERT INTO engines (name) VALUES ('V8') ON CONFLICT (name) DO NOTHING;
-INSERT INTO car_colors (name) VALUES ('Красный') ON CONFLICT (name) DO NOTHING;
-INSERT INTO bodies (name) VALUES ('Седан') ON CONFLICT (name) DO NOTHING;
-INSERT INTO categories (name) VALUES ('Легковой') ON CONFLICT (name) DO NOTHING;
-INSERT INTO brands (name) VALUES ('Toyota') ON CONFLICT (name) DO NOTHING;
-INSERT INTO models (name) VALUES ('Camry') ON CONFLICT (name) DO NOTHING;
-INSERT INTO drive_types (name) VALUES ('Передний') ON CONFLICT (name) DO NOTHING;
-INSERT INTO transmission_types (name) VALUES ('Автомат') ON CONFLICT (name) DO NOTHING;
-INSERT INTO wheel_sides (name) VALUES ('Левый') ON CONFLICT (name) DO NOTHING;
+INSERT  INTO fuel_types (name) VALUES ('Бензин');
+INSERT  INTO engines (name) VALUES ('V8');
+INSERT  INTO car_colors (name) VALUES ('Красный');
+INSERT  INTO bodies (name) VALUES ('Седан');
+INSERT  INTO categories (name) VALUES ('Легковой');
+INSERT  INTO brands (name) VALUES ('Toyota');
+INSERT  INTO models (name) VALUES ('Camry');
+INSERT  INTO drive_types (name) VALUES ('Передний');
+INSERT  INTO transmission_types (name) VALUES ('Автомат');
+INSERT  INTO wheel_sides (name) VALUES ('Левый');
 
 INSERT INTO users (login, name, password) VALUES ('user', 'Тестовый Иван Петрович', '123');
 
