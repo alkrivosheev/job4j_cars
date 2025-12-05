@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Слайдер</title>
+
+    <!-- CSS слайдера -->
+    <link rel="stylesheet" href="/css/simple-adaptive-slider.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* дополнительные стили для этого примера */
+        .itcss__items {
+            counter-reset: itcss;
+        }
+
+        .itcss__item {
+            counter-increment: itcss;
+        }
+
+        .itcss__item>div::before {
+            content: counter(itcss);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #fff;
+            font-style: italic;
+            font-size: 32px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Блок для фотографий -->
+<div class="post-photos">
+    <h5>Фотографии:</h5>
+    <!-- Проверяем, есть ли фото у поста (изменено на post.postPhotos) -->
+    <div th:if="${#sets.isEmpty(post.postPhotos)}"> <!-- Используем #sets.isEmpty для Set -->
+        <p>Фотографии отсутствуют</p>
+    </div>
+    <div class="itcss">
+    <div th:unless="${#sets.isEmpty(post.postPhotos)}" class="photo-grid"> <!-- Используем #sets.isEmpty -->
+        <!-- Итерируемся по списку post.postPhotos -->
+        <div class="itcss__wrapper">
+            <div class="itcss__items">
+        <div th:each="postPhoto : ${post.postPhotos}" class="photo-item">
+            <!-- Получаем путь к фото из объекта PostPhoto -->
+            <div class="itcss__item">
+            <img th:src="${postPhoto.getImageUrl()}" th:alt="'Фото для поста ' + ${post.id}" class="post-image" />
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+        <a class="itcss__btn itcss__btn_prev" href="#" role="button" data-slide="prev"></a>
+        <a class="itcss__btn itcss__btn_next" href="#" role="button" data-slide="next"></a>
+    </div>
+</div>
+
+<!-- Загружаем скрипт -->
+<script src="/js/simple-adaptive-slider.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+            var itcss = new ItcSimpleSlider('.itcss', {
+                loop: true,           // зацикливание
+                autoplay: false,      // автопрокрутка
+                interval: 5000,       // интервал автопрокрутки
+                swipe: true,          // свайп на мобильных
+                indicators: true      // индикаторы
+            });
+    });
+</script>
+</body>
+</html>

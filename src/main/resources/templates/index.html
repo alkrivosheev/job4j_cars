@@ -12,6 +12,21 @@
             padding: 16px;
             margin-bottom: 16px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .post-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            border-color: #0d6efd;
+        }
+        .post-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .post-link:hover {
+            text-decoration: none;
+            color: inherit;
         }
         .post-image {
             max-width: 100%;
@@ -34,6 +49,9 @@
             object-fit: cover;
             border-radius: 4px;
         }
+        .post-title {
+            color: #0d6efd;
+        }
     </style>
 </head>
 <body>
@@ -48,30 +66,34 @@
 
     <!-- Итерируемся по списку постов -->
     <div th:unless="${#lists.isEmpty(posts)}" class="posts-list">
-        <div th:each="post : ${posts}" class="post-card">
-            <div class="post-info">
-                <h3 th:text="${post.description}">Описание поста</h3>
-                <p><strong>Статус:</strong> <span th:text="${post.status}">Статус</span></p>
-                <p><strong>Цена:</strong> <span th:text="${#numbers.formatCurrency(post.price)}">Цена</span></p>
-                <!-- Другие поля поста, если есть... -->
-            </div>
-
-            <!-- Блок для фотографий -->
-            <div class="post-photos">
-                <h5>Фотографии:</h5>
-                <!-- Проверяем, есть ли фото у поста (изменено на post.postPhotos) -->
-                <div th:if="${#sets.isEmpty(post.postPhotos)}"> <!-- Используем #sets.isEmpty для Set -->
-                    <p>Фотографии отсутствуют</p>
+        <!-- Оберните каждую карточку в ссылку -->
+        <a th:each="post : ${posts}" th:href="@{/post/{id}(id=${post.id})}" class="post-link">
+            <div class="post-card">
+                <div class="post-info">
+                    <!-- Сделайте заголовок синим для визуального обозначения ссылки -->
+                    <h3 class="post-title" th:text="${post.description}">Описание поста</h3>
+                    <p><strong>Статус:</strong> <span th:text="${post.status}">Статус</span></p>
+                    <p><strong>Цена:</strong> <span th:text="${#numbers.formatCurrency(post.price)}">Цена</span></p>
+                    <!-- Другие поля поста, если есть... -->
                 </div>
-                <div th:unless="${#sets.isEmpty(post.postPhotos)}" class="photo-grid"> <!-- Используем #sets.isEmpty -->
-                    <!-- Итерируемся по списку post.postPhotos -->
-                    <div th:each="postPhoto : ${post.postPhotos}" class="photo-item">
-                        <!-- Получаем путь к фото из объекта PostPhoto -->
-                        <img th:src="${postPhoto.getImageUrl()}" th:alt="'Фото для поста ' + ${post.id}" class="post-image" />
+
+                <!-- Блок для фотографий -->
+                <div class="post-photos">
+                    <h5>Фотографии:</h5>
+                    <!-- Проверяем, есть ли фото у поста (изменено на post.postPhotos) -->
+                    <div th:if="${#sets.isEmpty(post.postPhotos)}"> <!-- Используем #sets.isEmpty для Set -->
+                        <p>Фотографии отсутствуют</p>
+                    </div>
+                    <div th:unless="${#sets.isEmpty(post.postPhotos)}" class="photo-grid"> <!-- Используем #sets.isEmpty -->
+                        <!-- Итерируемся по списку post.postPhotos -->
+                        <div th:each="postPhoto : ${post.postPhotos}" class="photo-item">
+                            <!-- Получаем путь к фото из объекта PostPhoto -->
+                            <img th:src="${postPhoto.getImageUrl()}" th:alt="'Фото для поста ' + ${post.id}" class="post-image" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
 <div th:insert="~{fragments/footer :: footer}"></div>

@@ -40,4 +40,21 @@ public class IndexController {
         model.addAttribute("posts", posts);
         return "index";
     }
+
+    /**
+     * Обрабатывает GET-запрос для просмотра конкретного поста по его ID
+     * @param id идентификатор поста
+     * @param model модель для передачи данных в представление
+     * @return шаблон showPost.html
+     */
+    @GetMapping("/post/{id}")
+    @Transactional
+    public String showPost(@PathVariable("id") int id, Model model) {
+        Post post = postService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Пост с id=" + id + " не найден"));
+
+        log.info("Открыт пост с id={}", id);
+        model.addAttribute("post", post);
+        return "post/showPost";
+    }
 }

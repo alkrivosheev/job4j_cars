@@ -52,4 +52,5 @@ public class PostService {
     public List<Post> findByUserId(int userId) {
         return postRepository.findByUserId(userId);
     }
+
 }
