@@ -30,8 +30,9 @@ public class IndexController {
      * @return имя шаблона "index"
      */
     @GetMapping({"/", "/index"})
+    @Transactional
     public String index(Model model) {
-        List<Post> posts = postService.findAllPostWithPhotos();
+        List<Post> posts = postService.findAllPostWithOnePhoto();
         log.info("Контроллер отдал в шаблон {} постов", posts.size());
         for (Post post : posts) {
             log.info("Контроллер отдал в шаблон {} фотографий", post.getPostPhotos().size());

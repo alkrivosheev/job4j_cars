@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/header :: header}"></div>
 <head>
     <meta charset="UTF-8">
     <title>Главная страница</title>
@@ -36,6 +37,7 @@
     </style>
 </head>
 <body>
+<div th:replace="~{fragments/navigation :: navigation}"></div>
 <div class="container mt-4">
     <h1>Список объявлений</h1>
 
@@ -72,5 +74,6 @@
         </div>
     </div>
 </div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

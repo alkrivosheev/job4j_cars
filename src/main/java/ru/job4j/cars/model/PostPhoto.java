@@ -2,14 +2,17 @@ package ru.job4j.cars.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "post_photos")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PostPhoto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(name = "photo_path", nullable = false, length = 255)
@@ -21,6 +24,6 @@ public class PostPhoto {
 
     @Transient
     public String getImageUrl() {
-        return "/images/" + this.photoPath;
+        return "/uploads/images/" + this.photoPath;
     }
 }

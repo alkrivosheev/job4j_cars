@@ -1,6 +1,7 @@
 package ru.job4j.cars.repository;
 
 import lombok.AllArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cars.model.User;
 
@@ -18,11 +19,21 @@ public class UserRepository {
      * Сохранить в базе.
      *
      * @param user пользователь.
-     * @return пользователь с id.
+     * @return пользователь с id, либо null.
      */
-    public User create(User user) {
-        crudRepository.run(session -> session.persist(user));
-        return user;
+    public Optional<User> create(User user) {
+        try {
+            User savedUser = crudRepository.tx(session -> {
+                session.persist(user);
+                return user;
+            });
+            return Optional.of(savedUser);
+        } catch (Exception e) {
+            if (e.getCause() instanceof ConstraintViolationException) {
+                return Optional.empty();
+            }
+            return Optional.empty();
+        }
     }
 
     /**
@@ -80,6 +91,24 @@ public class UserRepository {
                 "SELECT u FROM User u WHERE u.login = :login",
                 User.class,
                 Map.of("login", login)
+        );
+    }
+
+    /**
+     * Найти пользователя по логину и паролю.
+     *
+     * @param login логин пользователя
+     * @param password пароль пользователя
+     * @return пользователь.
+     */
+    public Optional<User> findByLoginAndPassword(String login, String password) {
+        return crudRepository.optional(
+                "SELECT u FROM User u WHERE u.login = :login AND u.password = :password",
+                User.class,
+                Map.of(
+                        "login", login,
+                        "password", password
+                )
         );
     }
 }

@@ -1,6 +1,7 @@
 package ru.job4j.cars.service;
 
 import lombok.AllArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.cars.model.Post;
@@ -28,8 +29,12 @@ public class PostService {
     }
 
     @Transactional
-    public List<Post> findAllPostWithPhotos() {
-        return postRepository.findAllWithPhotos();
+    public List<Post> findAllPostWithOnePhoto() {
+        List<Post> posts = postRepository.findAllWithOnePhoto();
+        for (Post post : posts) {
+            Hibernate.initialize(post.getPostPhotos());
+        }
+        return posts;
     }
 
     public List<Post> findAllOrderById() {

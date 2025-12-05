@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cars.model.Post;
+import ru.job4j.cars.model.PostPhoto;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 @AllArgsConstructor
 @Repository
@@ -125,7 +127,18 @@ public class PostRepository {
      *
      * @return список объявлений с фотографиями.
      */
-    public List<Post> findAllWithPhotos() {
-        return crudRepository.query("SELECT p FROM Post p LEFT JOIN FETCH p.postPhotos ORDER BY p.id ASC", Post.class);
+    public List<Post> findAllWithOnePhoto() {
+        List<Post> posts = crudRepository.query("SELECT p FROM Post p LEFT JOIN FETCH p.postPhotos ORDER BY p.id ASC", Post.class);
+        Random random = new Random();
+        posts.forEach(post -> {
+            if (post.getPostPhotos() != null && !post.getPostPhotos().isEmpty()) {
+                List<PostPhoto> photos = post.getPostPhotos();
+                int randomIndex = random.nextInt(photos.size());
+                post.setPostPhotos(List.of(photos.get(randomIndex)));
+            }
+        });
+
+        return posts;
+
     }
 }
