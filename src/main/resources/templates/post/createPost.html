@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание объявления</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">Добавить новое объявление</h1>
+            <form th:action="@{/post/createPost}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Информация об автомобиле</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="vin" class="form-label">VIN номер *</label>
+                                <input type="text" class="form-control" id="vin" name="vin" required maxlength="17">
+                                <div class="invalid-feedback">Пожалуйста, введите VIN номер (до 17 символов)</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="mileage" class="form-label">Пробег (км) *</label>
+                                <input type="number" class="form-control" id="mileage" name="mileage" required min="0">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="yearOfManufacture" class="form-label">Год выпуска *</label>
+                                <input type="number" class="form-control" id="yearOfManufacture" name="yearOfManufacture"
+                                       required min="1900" max="2025" step="1">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="countOwners" class="form-label">Количество владельцев *</label>
+                                <input type="number" class="form-control" id="countOwners" name="countOwners"
+                                       required min="1" value="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Характеристики автомобиля</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="brandId" class="form-label">Марка *</label>
+                                <select class="form-select" id="brandId" name="brandId" required>
+                                    <option value="">Выберите марку</option>
+                                    <option th:each="brand : ${brands}"
+                                            th:value="${brand.id}"
+                                            th:text="${brand.name}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="modelId" class="form-label">Модель *</label>
+                                <select class="form-select" id="modelId" name="modelId" required>
+                                    <option value="">Выберите модель</option>
+                                    <option th:each="model : ${models}"
+                                            th:value="${model.id}"
+                                            th:text="${model.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="categoryId" class="form-label">Категория *</label>
+                                <select class="form-select" id="categoryId" name="categoryId" required>
+                                    <option value="">Выберите категорию</option>
+                                    <option th:each="category : ${categories}"
+                                            th:value="${category.id}"
+                                            th:text="${category.name}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="bodyId" class="form-label">Тип кузова *</label>
+                                <select class="form-select" id="bodyId" name="bodyId" required>
+                                    <option value="">Выберите тип кузова</option>
+                                    <option th:each="body : ${bodies}"
+                                            th:value="${body.id}"
+                                            th:text="${body.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="engineId" class="form-label">Двигатель *</label>
+                                <select class="form-select" id="engineId" name="engineId" required>
+                                    <option value="">Выберите двигатель</option>
+                                    <option th:each="engine : ${engines}"
+                                            th:value="${engine.id}"
+                                            th:text="${engine.name}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="transmissionTypeId" class="form-label">Коробка передач *</label>
+                                <select class="form-select" id="transmissionTypeId" name="transmissionTypeId" required>
+                                    <option value="">Выберите коробку передач</option>
+                                    <option th:each="transmission : ${transmissionTypes}"
+                                            th:value="${transmission.id}"
+                                            th:text="${transmission.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="driveTypeId" class="form-label">Привод *</label>
+                                <select class="form-select" id="driveTypeId" name="driveTypeId" required>
+                                    <option value="">Выберите привод</option>
+                                    <option th:each="driveType : ${driveTypes}"
+                                            th:value="${driveType.id}"
+                                            th:text="${driveType.name}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="carColorId" class="form-label">Цвет *</label>
+                                <select class="form-select" id="carColorId" name="carColorId" required>
+                                    <option value="">Выберите цвет</option>
+                                    <option th:each="color : ${carColors}"
+                                            th:value="${color.id}"
+                                            th:text="${color.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fuelTypeId" class="form-label">Тип топлива *</label>
+                                <select class="form-select" id="fuelTypeId" name="fuelTypeId" required>
+                                    <option value="">Выберите тип топлива</option>
+                                    <option th:each="fuelType : ${fuelTypes}"
+                                            th:value="${fuelType.id}"
+                                            th:text="${fuelType.name}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="wheelSideId" class="form-label">Расположение руля *</label>
+                                <select class="form-select" id="wheelSideId" name="wheelSideId" required>
+                                    <option value="">Выберите расположение руля</option>
+                                    <option th:each="wheelSide : ${wheelSides}"
+                                            th:value="${wheelSide.id}"
+                                            th:text="${wheelSide.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Информация об объявлении</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Описание *</label>
+                            <textarea class="form-control" id="description" name="description"
+                                      rows="4" required maxlength="255"></textarea>
+                            <div class="form-text">Максимальная длина описания: 255 символов</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Цена (руб.) *</label>
+                            <input type="number" class="form-control" id="price" name="price"
+                                   required min="0" step="0.01">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Фотографии автомобиля</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="photos" class="form-label">Загрузите фотографии</label>
+                            <input type="file" class="form-control" id="photos" name="photos"
+                                   multiple accept="image/*">
+                            <div class="form-text">Можно загрузить несколько фотографий одновременно</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg">Опубликовать объявление</button>
+                    <a th:href="@{/}" class="btn btn-secondary btn-lg ms-2">Отмена</a>
+                </div>
+
+                <div th:if="${param.error}" class="alert alert-danger mt-3">
+                    Произошла ошибка при создании объявления. Пожалуйста, попробуйте снова.
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Валидация формы
+    (function () {
+        'use strict'
+
+        var forms = document.querySelectorAll('.needs-validation')
+
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+</body>
+</html>

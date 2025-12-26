@@ -30,6 +30,6 @@ public class AuthorizationFilter extends HttpFilter {
     }
 
     private boolean isAlwaysPermitted(String uri) {
-        return true; //!uri.contains("/schedule/");
+        return !uri.contains("/post/createPost");
     }
 }

@@ -58,7 +58,9 @@
 <div th:replace="~{fragments/navigation :: navigation}"></div>
 <div class="container mt-4">
     <h1>Список объявлений</h1>
-
+    <a th:href="@{/post/createPost}" class="btn btn-primary">
+        Добавить объявление
+    </a>
     <!-- Проверяем, есть ли посты -->
     <div th:if="${#lists.isEmpty(posts)}" class="alert alert-info">
         Объявлений пока нет.
